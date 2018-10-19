@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:fontFamily="serif-monospace"
+        android:text="QR CORE"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="32dp"
+        android:gravity="center"
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:hint="@string/hind_user"
+        android:background="@drawable/bovientxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <EditText
+        android:hint="@string/hind_password"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/bovientxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:textColor="@color/mauchu"
+        android:text="Đăng nhập"
+        android:textSize="18sp"
+        android:textAllCaps="false"
+        android:background="@drawable/bovien"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

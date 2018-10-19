@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">TLU.QR</string>
+    <string name="hind_user">Mã sinh viên</string>
+    <string name="hind_password">Mật khẩu</string>
+
+
+    <string name="facebook_app_id">292826664586094</string>
+    <string name="fb_login_protocol_scheme">fb292826664586094</string>
+    <string name="khoaname">(Lưu ý: Tài khoản bị khóa nếu nội dung chát không lành mạnh)</string>
+    <string name="dangnhapthanhcong">Đăng nhập thành công!</string>
+    <string name="dangnhapkhongthanhcong">Lỗi đăng nhập, xin thử lại.</string>
+    <string name="linkdangky">http://dkh.tlu.edu.vn</string>
+    <string name="hoi">Bạn có muốn xóa lịch trước đó không ?</string>
+    <string name="ketquadk">/CMCSoft.IU.Web.Info/Reports/Form/StudentTimeTable.aspx</string>
+    <string name="linkhinh">http://tlu.edu.vn</string>
+    <string name="linktintuc">http://tlu.edu.vn/tin-tuc-dai-hoc-thuy-loi</string>
+    <string name="luuURL">luuURL</string>
+    <string name="version">© 2017 LUONG CHUNG Version 3.0</string>
+    <string name="idfacebook">100004154587803</string>
+    <string name="toast_message">hello</string>
+    <string name="buffering_string">Xin chờ load video</string>
+    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="seek_to">Jump To</string>
+    <string name="seek_to_hint">Seconds</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
