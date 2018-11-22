@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                         if(resource!=null){
                             KiemtraInforThanhCong(resource);
                         }else {
-                            if(response.code()==200) Toast.makeText(MainActivity.this, "KHÔNG TÌM THẤY SINH VIÊN", Toast.LENGTH_SHORT).show();
-                            else Toast.makeText(MainActivity.this, "SERVER KHÔNG PHẢN HỒI", Toast.LENGTH_SHORT).show();
+                            if(response.code()==200) Toast.makeText(MainActivity.this, "KHÔNG TÌM THẤY SINH VIÊN !", Toast.LENGTH_SHORT).show();
+                            else Toast.makeText(MainActivity.this, "SERVER KHÔNG PHẢN HỒI !", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
