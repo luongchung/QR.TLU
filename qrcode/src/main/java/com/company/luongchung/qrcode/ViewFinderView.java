@@ -207,7 +207,7 @@ public class ViewFinderView extends View implements IViewFinder {
         Typeface font = Typeface.createFromAsset(getContext().getAssets(),"fonts/fontmain.ttf");
         paint.setTextSize(30);
         paint.setTypeface(font);
-        canvas.drawText("Căn chỉnh mã QR vào trong khung để quét", framingRect.left +mBorderLineLength*3/2 , framingRect.bottom + mBorderLineLength, paint);
+        canvas.drawText("Căn chỉnh mã QR vào trong khung để quét", framingRect.left -30, framingRect.bottom + mBorderLineLength, paint);
     }
 
     public void drawLaser(Canvas canvas) {

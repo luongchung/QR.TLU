@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
     <TextView
         android:fontFamily="serif-monospace"
-        android:text="QR CORE"
+        android:text="CHECK IN TLU"
         android:textStyle="bold"
         android:textAllCaps="true"
         android:textSize="32dp"
@@ -14,24 +14,62 @@
         android:layout_marginBottom="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-    <EditText
-        android:hint="@string/hind_user"
-        android:background="@drawable/bovientxt"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <EditText
-        android:hint="@string/hind_password"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/bovientxt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <Button
-        android:textColor="@color/mauchu"
-        android:text="Đăng nhập"
-        android:textSize="18sp"
-        android:textAllCaps="false"
-        android:background="@drawable/bovien"
-        android:layout_marginTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/layout_login"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:maxLength="30"
+                android:id="@+id/txtMSV"
+                android:hint="@string/hind_user"
+                android:background="@drawable/bovientxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/btnLuuTrangThai"
+                android:textColor="@color/mauchu"
+                android:text="Đăng nhập"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:background="@drawable/bovien"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_outLogin"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtMaSV"
+                android:hint="Nhập mã sinh viên (VD:145106****)"
+                android:background="@drawable/bovientxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txtTenSV"
+                android:layout_marginTop="10dp"
+                android:hint="Họ và tên: Lương Văn Chung"
+                android:background="@drawable/bovientxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:layout_marginBottom="10dp"
+                android:id="@+id/btnThoatTrangThai"
+                android:textColor="@color/mauchu"
+                android:text="Đăng xuất"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                android:background="@drawable/bovien"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
