@@ -30,14 +30,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="20dp"
                 android:id="@+id/btnLuuTrangThai"
                 android:textColor="@color/mauchu"
                 android:text="Đăng nhập"
                 android:textSize="18sp"
                 android:textAllCaps="false"
                 android:background="@drawable/bovien"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -47,16 +47,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/den"
+                android:textStyle="bold"
                 android:id="@+id/txtMaSV"
+                android:text="MSV:1451062102"
                 android:hint="Nhập mã sinh viên (VD:145106****)"
-                android:background="@drawable/bovientxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <TextView
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/den"
+                android:text="HVT: Lương Văn Chung"
                 android:id="@+id/txtTenSV"
                 android:layout_marginTop="10dp"
                 android:hint="Họ và tên: Lương Văn Chung"
-                android:background="@drawable/bovientxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:textStyle="bold"
+                android:textColor="@color/den"
+                android:text="HVT: Lương Văn Chung"
+                android:id="@+id/txtKhoa"
+                android:layout_marginTop="10dp"
+                android:hint="Họ và tên: Lương Văn Chung"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <Button

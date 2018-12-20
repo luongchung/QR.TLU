@@ -3,7 +3,6 @@ package com.company.luongchung.tluqr;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,27 +14,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.luongchung.models.getLopMonHocTheoDiaDiemResult;
 import com.company.luongchung.models.InforSinhVien;
 import com.company.luongchung.retrofit.APIClient;
 import com.company.luongchung.retrofit.APIInterface;
 import com.company.luongchung.statics.Session;
 import com.google.gson.Gson;
 
+import java.util.Arrays;
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    APIInterface apiInterface;
+    private String TAG="LuongchungMain";
     private String TRANG_THAI="TrangThaiLogin";
-    //nut chuc năng
     private Button btn_Qr,btn_Schedule,btn_News,btn_Support;
-    //nut lưu thoat trang thái
     private Button btnLuu,btnThoat;
     private EditText txtMSV;
-    private TextView txtMaSV,txtTenSV;
+    private TextView txtMaSV,txtTenSV,txtKhoa;
     private LinearLayout out_Login, login;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        btn_Schedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         btn_News.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         btnLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                apiInterface = APIClient.getClient().create(APIInterface.class);
+                APIInterface apiInterface = APIClient.getClient().create(APIInterface.class);
                 Call<InforSinhVien> call = apiInterface.getSV(txtMSV.getText().toString().trim());
                 call.enqueue(new Callback<InforSinhVien>() {
                     @Override
@@ -91,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                             KiemtraInforThanhCong(resource);
                         }else {
                             if(response.code()==200) Toast.makeText(MainActivity.this, "KHÔNG TÌM THẤY SINH VIÊN !", Toast.LENGTH_SHORT).show();
-                            else Toast.makeText(MainActivity.this, "SERVER KHÔNG PHẢN HỒI !", Toast.LENGTH_SHORT).show();
+                            else if(response.code()==400)Toast.makeText(MainActivity.this, "SERVER KHÔNG PHẢN HỒI !", Toast.LENGTH_SHORT).show();
                         }
                     }
                     @Override
@@ -137,8 +130,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //SetTEXT
-                        txtTenSV.setText("HVT: "+resource.getTenSV());
-                        txtMaSV.setText("MSV: "+resource.getMSV());
+                        txtMaSV.setText("Mã sinh viên: "+resource.getMSV());
+                        txtTenSV.setText("Tên sinh viên: "+resource.getTenSV());
+                        txtKhoa.setText("Khoa: "+resource.getTenKhoa());
                         //Chuyển layout
                         out_Login.setVisibility(View.VISIBLE);
                         login.setVisibility(View.INVISIBLE);
@@ -153,12 +147,12 @@ public class MainActivity extends AppCompatActivity {
                         Session.user=resource;
                     }
                 }).setNegativeButton("Không phải tôi",new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        txtMaSV.setText("");
-                    }
-                }
-        ).show();
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                txtMaSV.setText("");
+                            }
+                        }
+                ).show();
 
 
 
@@ -166,8 +160,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addControls() {
+        txtKhoa=findViewById(R.id.txtKhoa);
         btn_Qr=findViewById(R.id.btn_Qr);
-        btn_Schedule=findViewById(R.id.btn_Schedule);
+
         btn_News=findViewById(R.id.btn_News);
         btn_Support=findViewById(R.id.btn_Support);
         out_Login=findViewById(R.id.layout_outLogin);
@@ -189,8 +184,9 @@ public class MainActivity extends AppCompatActivity {
             String json = sharedPreferences.getString("user", "");
             Session.user = gson.fromJson(json, InforSinhVien.class);
             if(Session.user!=null){
-                txtMaSV.setText(Session.user.getMSV());
-                txtTenSV.setText(Session.user.getTenSV());
+                txtMaSV.setText("Mã sinh viên: "+Session.user.getMSV());
+                txtTenSV.setText("Tên sinh viên: "+Session.user.getTenSV());
+                txtKhoa.setText("Khoa: "+Session.user.getTenKhoa());
             }
         }else {
             out_Login.setVisibility(View.INVISIBLE);

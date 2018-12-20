@@ -12,7 +12,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/chu"
+            android:background="@drawable/bovientxt"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -33,66 +33,19 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/chu"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="100dp">
-            <Button
-                android:id="@+id/btn_Schedule"
-                android:background="@drawable/ic_calendar"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-            <TextView
-                android:layout_margin="4dp"
-                android:text="Thời khóa biểu"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@color/chu"
+            android:background="@drawable/bovientxt"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="100dp">
             <Button
 
-                android:background="@drawable/ic_qr_code"
+                android:background="@drawable/ic_tracuu"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
             <TextView
                 android:layout_margin="4dp"
-                android:text="Điểm danh QR"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@color/chu"
-            android:layout_margin="3dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="100dp">
-            <Button
-                android:background="@drawable/ic_calendar"
-                android:layout_width="50dp"
-                android:layout_height="50dp" />
-            <TextView
-                android:layout_margin="4dp"
-                android:text="Thời khóa biểu"
+                android:text="Tra cứu điểm danh"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_width="match_parent"
@@ -104,10 +57,11 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
+
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/chu"
+            android:background="@drawable/bovientxt"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -128,7 +82,7 @@
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@color/chu"
+            android:background="@drawable/bovientxt"
             android:layout_margin="3dp"
             android:layout_weight="1"
             android:layout_width="0dp"
@@ -146,5 +100,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+
     </LinearLayout>
 </LinearLayout>

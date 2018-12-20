@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -13,28 +15,45 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.company.luongchung.models.Thongbao;
+import com.company.luongchung.statics.Session;
+import com.company.luongchung.models.getLopMonHocTheoDiaDiemResult;
 import com.company.luongchung.qrcode.ZXingScannerView;
+import com.company.luongchung.retrofit.APIClient;
+import com.company.luongchung.retrofit.APIInterface;
+import com.company.luongchung.statics.Session;
+import com.google.gson.Gson;
 import com.google.zxing.Result;
 import android.Manifest;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  {
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
+    APIInterface apiInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         setContentView(mScannerView);
         int apiVersion = android.os.Build.VERSION.SDK_INT;
-        if (apiVersion >= android.os.Build.VERSION_CODES.M) {
+        if (apiVersion >= Build.VERSION_CODES.LOLLIPOP) {
             if (!checkPermission()) {
                 requestPermission();
             }
         }
+        apiInterface = APIClient.getClient().create(APIInterface.class);
     }
     private boolean checkPermission() {
         return (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
@@ -78,43 +97,111 @@ public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  
     private void showMessage(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(ScanQR.this)
                 .setMessage(message)
-                .setPositiveButton("OK", okListener)
-                .setNegativeButton("Cancel", null)
+                .setPositiveButton("Đóng", okListener)
                 .create()
                 .show();
     }
     @Override
     public void handleResult(Result result) {
-        final String stringResult = result.getText();
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Scan Result");
-        builder.setNegativeButton("Quét lại", new DialogInterface.OnClickListener() {
+        Call<List<getLopMonHocTheoDiaDiemResult>> call = apiInterface.GetLopMonHocTheoDiaDiem(result.getText().trim());
+        call.enqueue(new Callback<List<getLopMonHocTheoDiaDiemResult>>() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mScannerView.resumeCameraPreview(ScanQR.this);
+            public void onResponse(Call<List<getLopMonHocTheoDiaDiemResult>> call, Response<List<getLopMonHocTheoDiaDiemResult>> response) {
+                List<getLopMonHocTheoDiaDiemResult> resource = response.body();
+                if(resource!=null){
+                    thanhCong(resource);
+                }else {
+                    if(response.code()==200) Toast.makeText(ScanQR.this, "KHÔNG TÌM THẤY SINH VIÊN !", Toast.LENGTH_SHORT).show();
+                    else if(response.code()==400)Toast.makeText(ScanQR.this, "SERVER KHÔNG PHẢN HỒI !", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<getLopMonHocTheoDiaDiemResult>> call, Throwable t) {
+
             }
         });
-        builder.setPositiveButton("Xác nhận", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(stringResult));
-                startActivity(browserIntent);
-            }
-        });
-        builder.setMessage(stringResult);
-        AlertDialog alert = builder.create();
-        alert.show();
+
+
+
+
+
     }
+
+    private void thanhCong(final List<getLopMonHocTheoDiaDiemResult> resource) {
+        if (resource.size()==0){
+            new android.support.v7.app.AlertDialog.Builder(ScanQR.this).setTitle("Thông báo")
+                    .setMessage("KHÔNG TÌM THẤY LỚP NÀO !"
+                    ).setNegativeButton("Quét lại",new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mScannerView.resumeCameraPreview(ScanQR.this);
+                        }
+                    }
+            ).show();
+        }else
+        new android.support.v7.app.AlertDialog.Builder(ScanQR.this).setTitle("XÁC NHẬN ĐIỂM DANH")
+                .setMessage("Mã môn: "+resource.get(0).getMaLopMonHoc()+"\n"
+                            +"Tên lớp học: "+resource.get(0).getTenLopMonHoc()+"\n"
+                            +"Buổi học: "+resource.get(0).getTenBuoiHoc()+"\n"
+                            +"Giảng viên: "+resource.get(0).getTenNV()
+                )
+                .setPositiveButton("Điểm danh", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       diemdanhSV(resource.get(0).getID(),Session.user.getID());
+
+
+                    }
+                }).setNegativeButton("Quét lại",new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                      mScannerView.resumeCameraPreview(ScanQR.this);
+                    }
+                }
+        ).show();
+    }
+
+    private void diemdanhSV(String idBuoiHoc,String idSinhVien ) {
+        Call<Thongbao> call = apiInterface.diemdanhsv(idSinhVien,idBuoiHoc);
+        call.enqueue(new Callback<Thongbao>() {
+            @Override
+            public void onResponse(Call<Thongbao> call, Response<Thongbao> response) {
+                if(response.body()!=null){
+                    new android.support.v7.app.AlertDialog.Builder(ScanQR.this).setTitle("Thông báo")
+                            .setMessage(response.body().getText()
+                            ).setNegativeButton("Đóng",new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    finish();
+                                }
+                            }
+                    ).show();
+                }
+                else {
+                   if(response.code()==400)Toast.makeText(ScanQR.this, "SERVER KHÔNG PHẢN HỒI !", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Thongbao> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
         mScannerView.startCamera();          // Start camera on resume
     }
-
     @Override
     public void onPause() {
         super.onPause();
         mScannerView.stopCamera();           // Stop camera on pause
     }
+
+
+
 }
