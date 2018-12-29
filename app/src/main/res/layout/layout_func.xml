@@ -6,9 +6,8 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
@@ -39,7 +38,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp">
             <Button
-
+                android:id="@+id/btntracuudiemdanh"
                 android:background="@drawable/ic_tracuu"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
@@ -54,10 +53,8 @@
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp">
-
+        android:layout_height="wrap_content">
         <LinearLayout
             android:orientation="vertical"
             android:gravity="center"
@@ -100,12 +97,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
-
-
     </LinearLayout>
 </LinearLayout>

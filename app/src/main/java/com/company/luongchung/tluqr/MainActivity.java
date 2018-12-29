@@ -3,6 +3,7 @@ package com.company.luongchung.tluqr;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private String TAG="LuongchungMain";
     private String TRANG_THAI="TrangThaiLogin";
-    private Button btn_Qr,btn_Schedule,btn_News,btn_Support;
+    private Button btn_Qr,btn_Tracuudiemdanh,btn_News,btn_Support;
     private Button btnLuu,btnThoat;
     private EditText txtMSV;
     private TextView txtMaSV,txtTenSV,txtKhoa;
@@ -58,6 +59,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        btn_Tracuudiemdanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Session.user!=null){
+                    Intent intentTraCuuDiemDanh=new Intent(MainActivity.this,TraCuuDiemDanh .class);
+                    startActivity(intentTraCuuDiemDanh);
+                }else {
+                    Toast.makeText(MainActivity.this, "Bạn phải đăng nhập mới sử dụng chức năng này!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
         btn_News.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +80,9 @@ public class MainActivity extends AppCompatActivity {
         btn_Support.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:0834443401"));
+                startActivity(intent);
             }
         });
         btnLuu.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
         btn_Qr=findViewById(R.id.btn_Qr);
 
         btn_News=findViewById(R.id.btn_News);
+        btn_Tracuudiemdanh=findViewById(R.id.btntracuudiemdanh);
         btn_Support=findViewById(R.id.btn_Support);
         out_Login=findViewById(R.id.layout_outLogin);
         login = findViewById(R.id.layout_login);
