@@ -24,8 +24,7 @@ public interface APIInterface {
 
     //điểm danh sinh viên.
     @GET("/api/diemdanh/")
-    Call<Thongbao> diemdanhsv(@Query("idsinhvien") String idSinhVien,@Query("idbuoihoc") String idBuoiHoc);
-
+    Call<Thongbao> diemdanhsv(@Query("idsinhvien") String idSinhVien,@Query("idbuoihoc") String idBuoiHoc,@Query("token") String token);
 
     //Get lớp môn học mà sinh viên thuộc lớp đó
     @GET("/api/LopMonHoc/{idsv}")

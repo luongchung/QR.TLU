@@ -31,7 +31,6 @@ public class ViewFinderView extends View implements IViewFinder {
     private int scannerAlpha;
     private static final int POINT_SIZE = 10;
     private static final long ANIMATION_DELAY = 80l;
-
     private final int mDefaultLaserColor = getResources().getColor(R.color.viewfinder_laser);
     private final int mDefaultMaskColor = getResources().getColor(R.color.viewfinder_mask);
     private final int mDefaultBorderColor = getResources().getColor(R.color.viewfinder_border);

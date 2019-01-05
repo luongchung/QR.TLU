@@ -19,7 +19,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.company.luongchung.models.Thongbao;
 import com.company.luongchung.statics.Session;
 import com.company.luongchung.models.getLopMonHocTheoDiaDiemResult;
@@ -39,6 +38,9 @@ import retrofit2.Response;
 
 
 public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  {
+    private static String iDDiaDiem;
+    private static String toKen;
+
     private static final int REQUEST_CAMERA = 1;
     private ZXingScannerView mScannerView;
     APIInterface apiInterface;
@@ -54,6 +56,8 @@ public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  
             }
         }
         apiInterface = APIClient.getClient().create(APIInterface.class);
+        //set time scan
+        mScannerView.setAspectTolerance(0.1f);
     }
     private boolean checkPermission() {
         return (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
@@ -103,7 +107,11 @@ public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  
     }
     @Override
     public void handleResult(Result result) {
-        Call<List<getLopMonHocTheoDiaDiemResult>> call = apiInterface.GetLopMonHocTheoDiaDiem(result.getText().trim());
+        String trave=result.getText().trim();
+        String[] data = trave.split(",", 2);
+        iDDiaDiem=data[0];
+        toKen=data[1];
+        Call<List<getLopMonHocTheoDiaDiemResult>> call = apiInterface.GetLopMonHocTheoDiaDiem(data[0]);
         call.enqueue(new Callback<List<getLopMonHocTheoDiaDiemResult>>() {
             @Override
             public void onResponse(Call<List<getLopMonHocTheoDiaDiemResult>> call, Response<List<getLopMonHocTheoDiaDiemResult>> response) {
@@ -149,7 +157,7 @@ public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  
                 .setPositiveButton("Điểm danh", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                       diemdanhSV(resource.get(0).getID(),Session.user.getID());
+                       diemdanhSV(resource.get(0).getID(),Session.user.getID(),toKen);
 
 
                     }
@@ -162,8 +170,8 @@ public class ScanQR extends Activity implements ZXingScannerView.ResultHandler  
         ).show();
     }
 
-    private void diemdanhSV(String idBuoiHoc,String idSinhVien ) {
-        Call<Thongbao> call = apiInterface.diemdanhsv(idSinhVien,idBuoiHoc);
+    private void diemdanhSV(String idBuoiHoc,String idSinhVien,String toKen ) {
+        Call<Thongbao> call = apiInterface.diemdanhsv(idSinhVien,idBuoiHoc,toKen);
         call.enqueue(new Callback<Thongbao>() {
             @Override
             public void onResponse(Call<Thongbao> call, Response<Thongbao> response) {
