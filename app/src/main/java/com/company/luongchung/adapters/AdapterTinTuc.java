@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.company.luongchung.models.TinTuc_m;
 import com.company.luongchung.tluqr.NoiDungTinTuc;
 import com.company.luongchung.tluqr.R;
@@ -52,9 +54,12 @@ public class AdapterTinTuc extends ArrayAdapter<TinTuc_m> {
 
         String urlAnh= tinTucM.getUrlHinh();
 
-            Picasso.with(context).load(urlAnh).into(id_Anh);
+      //  Picasso.with(context).load(urlAnh).into(id_Anh);
 
-
+        Glide.with(context)
+                .load(urlAnh)
+                .apply(new RequestOptions().override(100, 100))
+                .into(id_Anh);
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
